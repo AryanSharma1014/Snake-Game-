@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Zness Card Maker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(120deg, #f5f7fa 0%, #c3cfe2 100%);
+            position: relative;
+        }
+        
+        .bg-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 36px;
+            box-shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.10);
+            border: 1.5px solid #e0eafc;
+            padding: 48px 56px 36px 56px;
+            max-width: 700px;
+            width: 98vw;
+            margin: 48px 0;
+            backdrop-filter: blur(8px) saturate(1.1);
+            position: relative;
+            z-index: 1;
+            animation: cardPop 1.2s cubic-bezier(.4, 2, .6, 1);
+        }
+        
+        @keyframes cardPop {
+            from {
+                opacity: 0;
+                transform: scale(0.96) translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+        
+        .logo-float {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #BB2649 60%, #71ADBA 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 800;
+            box-shadow: 0 4px 24px #BB264933;
+            position: absolute;
+            left: 50%;
+            top: -30px;
+            transform: translateX(-50%);
+            border: 4px solid #fff;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #512C3A;
+            font-size: 2.2rem;
+            margin-bottom: 32px;
+            letter-spacing: 1px;
+            font-weight: 800;
+        }
+        
+        .section {
+            margin-bottom: 32px;
+        }
+        
+        .section h3 {
+            color: #BB2649;
+            font-size: 1.15rem;
+            margin-bottom: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            border-bottom: 1.5px solid #e0eafc;
+            padding-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section h3 .icon {
+            font-size: 1.2em;
+            vertical-align: middle;
+        }
+        
+        .form-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
+        
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="color"],
+        .form-group input[type="number"],
+        .form-group select {
+            width: 100%;
+            padding: 16px 14px 8px 14px;
+            border-radius: 18px;
+            border: 1.5px solid #BB2649;
+            background: #f8fafc;
+            color: #232b3b;
+            font-size: 1.05rem;
+            transition: border 0.25s, box-shadow 0.25s;
+            outline: none;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            border: 1.5px solid #71ADBA;
+            box-shadow: 0 0 0 2px #71ADBA55;
+            background: #fff;
+        }
+        
+        .form-group label {
+            position: absolute;
+            left: 16px;
+            top: 14px;
+            color: #BB2649;
+            font-size: 1rem;
+            font-weight: 500;
+            pointer-events: none;
+            transition: 0.2s;
+            background: transparent;
+            border-radius: 12px;
+        }
+        
+        .form-group input:focus+label,
+        .form-group input:not(:placeholder-shown)+label,
+        .form-group select:focus+label,
+        .form-group select:not([value=""]):not(:focus)+label {
+            top: -12px;
+            left: 8px;
+            font-size: 0.92rem;
+            color: #512C3A;
+            background: #fff;
+            padding: 0 6px;
+            border-radius: 8px;
+        }
+        
+        input[type="file"] {
+            margin-top: 8px;
+            margin-bottom: 20px;
+            color: #512C3A;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+            margin-bottom: 0;
+        }
+        
+        .theme-swatches {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .swatch {
+            width: 28px;
+            height: 28px;
+            border-radius: 14px;
+            border: 2px solid #fff;
+            box-shadow: 0 1px 4px #0001;
+            display: inline-block;
+        }
+        
+        input[type="submit"] {
+            background: linear-gradient(90deg, #BB2649, #71ADBA, #EDEAB1);
+            border: none;
+            color: #fff;
+            padding: 16px 0;
+            border-radius: 32px;
+            cursor: pointer;
+            font-size: 1.15rem;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 2px 12px #BB264933;
+            letter-spacing: 1px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        input[type="submit"]:hover {
+            transform: scale(1.04);
+            box-shadow: 0 4px 24px #BB264955;
+        }
+        
+        @media (max-width: 900px) {
+            .glass-card {
+                padding: 28px 2vw 28px 2vw;
+                max-width: 99vw;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <svg class="bg-svg" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="200" cy="120" r="120" fill="#BB2649" fill-opacity="0.10"/>
+      <circle cx="1240" cy="180" r="90" fill="#71ADBA" fill-opacity="0.10"/>
+      <rect x="900" y="700" width="220" height="120" rx="60" fill="#EDEAB1" fill-opacity="0.10"/>
+      <rect x="100" y="700" width="120" height="120" rx="60" fill="#512C3A" fill-opacity="0.10"/>
+    </svg>
+    <div class="glass-card">
+        <div class="logo-float">ZC</div>
+        <h1>Zness Card Maker</h1>
+        <form method="POST" action="/submit" enctype="multipart/form-data">
+            <!-- Basic Information -->
+            <div class="section">
+                <h3><span class="icon">👤</span> Basic Information</h3>
+                <div class="form-group">
+                    <input type="text" name="name" required placeholder=" " id="name">
+                    <label for="name">Full Name</label>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" required placeholder=" " id="email">
+                    <label for="email">Email Address</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="phone" required placeholder=" " id="phone">
+                    <label for="phone">Phone Number</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="profession" required placeholder=" " id="profession">
+                    <label for="profession">Profession</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="address" required placeholder=" " id="address">
+                    <label for="address">Address</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="linkedin" required placeholder=" " id="linkedin">
+                    <label for="linkedin">LinkedIn URL</label>
+                </div>
+            </div>
+
+            <!-- Logo Option -->
+            <div class="section">
+                <h3><span class="icon">🖼</span> Header Logo</h3>
+                <label><input type="radio" name="header_logo_option" value="zc" checked id="logo_zc_radio"> Show "ZC" (default)</label><br>
+                <label><input type="radio" name="header_logo_option" value="custom" id="logo_custom_radio"> Upload my logo</label>
+                <input type="file" name="logo_file" accept="image/*" style="margin-top:10px;" id="logo_file_input">
+            </div>
+
+            <!-- Theme & Colors -->
+            <div class="section">
+                <h3><span class="icon">🎨</span> Theme & Colors</h3>
+                <div class="theme-swatches">
+                    <span class="swatch" style="background: linear-gradient(90deg,#BB2649,#EFD6D2,#CFC7B2,#B5B682,#A7C7E7,#17293A);"></span>
+                    <span class="swatch" style="background: linear-gradient(90deg,#EDEAB1,#512C3A,#71ADBA,#FF654F,#4C5578);"></span>
+                    <span class="swatch" style="background: linear-gradient(90deg,#f5e2b7,#e2a1c4,#d58bb0,#c7709d,#b54f7a);"></span>
+                    <span class="swatch" style="background: linear-gradient(90deg,#141414,#282828,#3c3c3c,#3c3c50,#28283c,#FF654F);"></span>
+                </div>
+                <label for="theme">Card Theme</label>
+                <select name="theme" id="theme" required>
+                    <option value="magenta_neutrals">Magenta & Neutrals</option>
+                    <option value="vibrant_energetic">Vibrant & Energetic</option>
+                    <option value="soft_pastel">Soft Pastel</option>
+                    <option value="clean_dark">Clean Dark Mode</option>
+                </select>
+            </div>
+
+            <!-- Layout Options -->
+            <div class="section">
+                <h3><span class="icon">📐</span> Layout Options</h3>
+                <div class="form-group">
+                    <input type="number" name="card_width" value="900" min="600" max="1200" placeholder=" " id="card_width">
+                    <label for="card_width">Card Width (px)</label>
+                </div>
+                <div class="form-group">
+                    <input type="number" name="card_height" value="500" min="400" max="800" placeholder=" " id="card_height">
+                    <label for="card_height">Card Height (px)</label>
+                </div>
+                <label for="layout_style">Layout Style</label>
+                <select name="layout_style">
+                    <option value="standard">Standard</option>
+                    <option value="minimal">Minimal</option>
+                    <option value="modern">Modern</option>
+                    <option value="elegant">Elegant</option>
+                </select>
+            </div>
+
+            <!-- Typography -->
+            <div class="section">
+                <h3><span class="icon">🔤</span> Typography</h3>
+                <label for="font_style">Font Style</label>
+                <select name="font_style">
+                    <option value="montserrat">Montserrat</option>
+                    <option value="roboto">Roboto</option>
+                    <option value="opensans">Open Sans</option>
+                    <option value="default">System Default</option>
+                </select>
+            </div>
+
+            <!-- Visual Effects -->
+            <div class="section">
+                <h3><span class="icon">✨</span> Visual Effects</h3>
+                <div class="checkbox-group">
+                    <input type="checkbox" name="show_shadow" id="show_shadow" checked>
+                    <label for="show_shadow">Show Drop Shadow</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" name="show_glass" id="show_glass" checked>
+                    <label for="show_glass">Glass Effect</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" name="show_border" id="show_border" checked>
+                    <label for="show_border">Rounded Border</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" name="show_header" id="show_header" checked>
+                    <label for="show_header">Header Bar</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" name="show_qr" id="show_qr" checked>
+                    <label for="show_qr">QR Code</label>
+                </div>
+            </div>
+
+            <!-- QR Code Options -->
+            <div class="section">
+                <h3><span class="icon">🔗</span> QR Code Options</h3>
+                <div class="form-group">
+                    <input type="number" name="qr_size" value="110" min="80" max="150" placeholder=" " id="qr_size">
+                    <label for="qr_size">QR Code Size</label>
+                </div>
+                <div class="form-group">
+                    <input type="color" name="qr_color" value="#000000" id="qr_color">
+                    <label for="qr_color">QR Code Color</label>
+                </div>
+                <div class="form-group">
+                    <input type="color" name="qr_bg_color" value="#FFFFFF" id="qr_bg_color">
+                    <label for="qr_bg_color">QR Background Color</label>
+                </div>
+            </div>
+
+            <input type="submit" value="Generate My Card">
+        </form>
+    </div>
+    <script>
+        document.getElementById('logo_file_input').addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                document.getElementById('logo_custom_radio').checked = true;
+            }
+        });
+    </script>
+</body>
+
+</html>
